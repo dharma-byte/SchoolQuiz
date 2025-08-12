@@ -1,0 +1,79 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Role is stored as STRING ("STUDENT" | "TEACHER")
+
+model User {
+  id           String   @id @default(cuid())
+  name         String?
+  email        String?  @unique
+  rollNumber   String?  @unique
+  role         String   @default("STUDENT")
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  submissions Submission[]
+  quizzes     Quiz[]       @relation("QuizOwner")
+}
+
+model Quiz {
+  id          String       @id @default(cuid())
+  title       String
+  subject     String
+  createdAt   DateTime     @default(now())
+  ownerId     String
+  owner       User         @relation("QuizOwner", fields: [ownerId], references: [id])
+  questions   Question[]
+  submissions Submission[]
+  isPublished Boolean      @default(true)
+}
+
+model Question {
+  id        String   @id @default(cuid())
+  quizId    String
+  quiz      Quiz     @relation(fields: [quizId], references: [id])
+  text      String
+  options   Option[]
+  correctIx Int
+  answers   Answer[] @relation("QuestionAnswers")
+}
+
+model Option {
+  id         String   @id @default(cuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id])
+  text       String
+  idx        Int
+}
+
+model Submission {
+  id         String   @id @default(cuid())
+  quizId     String
+  userId     String
+  createdAt  DateTime @default(now())
+  scorePct   Int
+  timeTakenS Int
+  answers    Answer[]
+
+  quiz Quiz @relation(fields: [quizId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([quizId, userId])
+}
+
+model Answer {
+  id           String @id @default(cuid())
+  submissionId String
+  questionId   String
+  selectedIx   Int
+
+  submission Submission @relation(fields: [submissionId], references: [id])
+  question   Question   @relation("QuestionAnswers", fields: [questionId], references: [id])
+}
