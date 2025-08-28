@@ -1,4 +1,4 @@
-// File: F:\schoolquiz-pro-nextjs\app\layout.tsx
+// File: F:\SchoolQuiz\schoolquiz-pro-nextjs\app\layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

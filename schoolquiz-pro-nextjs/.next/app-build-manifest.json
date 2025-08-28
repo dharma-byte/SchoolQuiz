@@ -26,25 +26,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/teacher/layout.js"
     ],
-    "/teacher/quizzes/new/page": [
+    "/teacher/quizzes/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/teacher/quizzes/new/page.js"
-    ],
-    "/student/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/student/page.js"
-    ],
-    "/student/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/student/layout.js"
-    ],
-    "/student/quizzes/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/student/quizzes/[id]/page.js"
+      "static/chunks/app/teacher/quizzes/[id]/page.js"
     ]
   }
 }
